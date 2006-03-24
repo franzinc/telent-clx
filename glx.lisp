@@ -1,71 +1,71 @@
 (defpackage :glx
   (:use :common-lisp :xlib)
   (:import-from :xlib
-                "DEFINE-ACCESSOR"
-                "DEF-CLX-CLASS"
-                "DECLARE-EVENT"
-                "ALLOCATE-RESOURCE-ID"
-                "DEALLOCATE-RESOURCE-ID"
-                "PRINT-DISPLAY-NAME"
-                "WITH-BUFFER-REQUEST"
-                "WITH-BUFFER-REQUEST-AND-REPLY"
-                "READ-CARD32"
-                "WRITE-CARD32"
-                "CARD32-GET"
-                "CARD8-GET"
-                "SEQUENCE-GET"
-                "SEQUENCE-PUT"
-                "DATA"
+                #:define-accessor
+                #:def-clx-class
+                #:declare-event
+                #:allocate-resource-id
+                #:deallocate-resource-id
+                #:print-display-name
+                #:with-buffer-request
+                #:with-buffer-request-and-reply
+                #:read-card32
+                #:write-card32
+                #:card32-get
+                #:card8-get
+                #:sequence-get
+                #:sequence-put
+                #:data
 
                 ;; Types
-                "ARRAY-INDEX"
-                "BUFFER-BYTES"
+                #:array-index
+                #:buffer-bytes
 
-                "WITH-DISPLAY"
-                "BUFFER-FLUSH"
-                "BUFFER-WRITE"
-                "BUFFER-FORCE-OUTPUT"
-                "ASET-CARD8"
-                "ASET-CARD16"
-                "ASET-CARD32"
+                #:with-display
+                #:buffer-flush
+                #:buffer-write
+                #:buffer-force-output
+                #:aset-card8
+                #:aset-card16
+                #:aset-card32
                 )
   (:export ;; Constants
-           "+VENDOR+"
-           "+VERSION+"
-           "+EXTENSIONS+"
+           #:+vendor+
+           #:+version+
+           #:+extensions+
 
            ;; Conditions
-           "BAD-CONTEXT"
-           "BAD-CONTEXT-STATE"
-           "BAD-DRAWABLE"
-           "BAD-PIXMAP"
-           "BAD-CONTEXT-TAG"
-           "BAD-CURRENT-WINDOW"
-           "BAD-RENDER-REQUEST"
-           "BAD-LARGE-REQUEST"
-           "UNSUPPORTED-PRIVATE-REQUEST"
-           "BAD-FB-CONFIG"
-           "BAD-PBUFFER"
-           "BAD-CURRENT-DRAWABLE"
-           "BAD-WINDOW"
+           #:bad-context
+           #:bad-context-state
+           #:bad-drawable
+           #:bad-pixmap
+           #:bad-context-tag
+           #:bad-current-window
+           #:bad-render-request
+           #:bad-large-request
+           #:unsupported-private-request
+           #:bad-fb-config
+           #:bad-pbuffer
+           #:bad-current-drawable
+           #:bad-window
 
            ;; Requests
-           "QUERY-VERSION"
-           "QUERY-SERVER-STRING"
-           "CREATE-CONTEXT"
-           "DESTROY-CONTEXT"
-           "IS-DIRECT"
-           "QUERY-CONTEXT"
-           "GET-DRAWABLE-ATTRIBUTES"
-           "MAKE-CURRENT"
+           #:query-version
+           #:query-server-string
+           #:create-context
+           #:destroy-context
+           #:is-direct
+           #:query-context
+           #:get-drawable-attributes
+           #:make-current
            ;;"GET-VISUAL-CONFIGS"
-           "CHOOSE-VISUAL"
-           "VISUAL-ATTRIBUTE"
-           "VISUAL-ID"
-           "RENDER"
-           "SWAP-BUFFERS"
-           "WAIT-GL"
-           "WAIT-X"
+           #:choose-visual
+           #:visual-attribute
+           #:visual-id
+           #:render
+           #:swap-buffers
+           #:wait-gl
+           #:wait-x
            ))
 
 

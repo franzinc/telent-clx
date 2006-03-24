@@ -112,7 +112,7 @@
 (defconstant +get-permisions+      20)
 
 (define-extension "XFree86-VidModeExtension"
-  :events (:xfree86-vidmode-notify) 
+  :events (:XFree86-VidMode-notify)
   :errors (xf86-vidmode-bad-clock 
 	   xf86-vidmode-bad-htimings 
 	   xf86-vidmode-bad-vtimings

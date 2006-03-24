@@ -16,25 +16,25 @@
 (defpackage :dpms
   (:use :common-lisp)
   (:import-from :xlib
-                "DEFINE-EXTENSION"
-                "DISPLAY"
-                "WITH-BUFFER-REQUEST-AND-REPLY"
-                "WITH-BUFFER-REQUEST"
-                "EXTENSION-OPCODE"
-                "CARD8-GET"
-                "CARD16-GET"
-                "BOOLEAN-GET"
-                "CARD8"
-                "CARD16"
-                "DATA")
-  (:export "DPMS-GET-VERSION"
-           "DPMS-CAPABLE"
-           "DPMS-GET-TIMEOUTS"
-           "DPMS-SET-TIMEOUTS"
-           "DPMS-ENABLE"
-           "DPMS-DISABLE"
-           "DPMS-FORCE-LEVEL"
-           "DPMS-INFO"))
+                #:define-extension
+                #:display
+                #:with-buffer-request-and-reply
+                #:with-buffer-request
+                #:extension-opcode
+                #:card8-get
+                #:card16-get
+                #:boolean-get
+                #:card8
+                #:card16
+                #:data)
+  (:export #:dpms-get-version
+           #:dpms-capable
+           #:dpms-get-timeouts
+           #:dpms-set-timeouts
+           #:dpms-enable
+           #:dpms-disable
+           #:dpms-force-level
+           #:dpms-info))
 
 (in-package :dpms)
 
