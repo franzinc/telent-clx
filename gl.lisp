@@ -2134,6 +2134,14 @@
     (aset-card32 bits array index))
   value)
 
+#+excl
+(defun aset-float32 (value array index)
+  (declare (type single-float value)
+           (type buffer-bytes array)
+           (type array-index index))
+  #.(declare-buffun)
+  (setf (sys:memref array #.(sys::mdparam 'comp::md-lvector-data0-norm)
+		    index :single-float) value))
 
 #+sbcl
 (defun aset-float64 (value array index)
@@ -2176,6 +2184,14 @@
     (aset-card32 high array (the array-index (+ index 4))))
   value)
 
+#+excl
+(defun aset-float64 (value array index)
+  (declare (type double-float value)
+           (type buffer-bytes array)
+           (type array-index index))
+  #.(declare-buffun)
+  (setf (sys:memref array #.(sys::mdparam 'comp::md-lvector-data0-norm)
+		    index :double-float) value))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
 (defun byte-width (type)

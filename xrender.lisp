@@ -81,6 +81,7 @@
 
 (in-package :xlib)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
 ;; Beginning to collect the external interface for documentation.
 (export '(render-create-picture
 	  render-free-picture
@@ -138,6 +139,7 @@
           
 	  render-combine
 	  ))
+)
 
 (pushnew :clx-ext-render *features*)
 

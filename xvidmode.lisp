@@ -37,6 +37,7 @@
 
 (in-package :xlib)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
 (export '(mode-info
 	  mode-info-dotclock
 	  mode-info-hdisplay
@@ -77,6 +78,7 @@
 	  xfree86-vidmode-set-viewport
 	  xfree86-vidmode-get-dotclocks)
 	:xlib)
+)
 
 ;; current version numbers
 ;;

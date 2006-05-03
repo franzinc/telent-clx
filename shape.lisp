@@ -22,6 +22,7 @@
 
 (in-package :xlib)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
 (export '(shape-query-version
           shape-rectangles
           shape-mask
@@ -32,6 +33,7 @@
           shape-input-selected-p
           shape-get-rectangles)
         :xlib)
+)
 
 (define-extension "SHAPE"
     :events (:shape-notify))

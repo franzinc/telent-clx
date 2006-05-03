@@ -20,7 +20,9 @@
 
 (in-package :xlib)
 
-(proclaim '(declaration array-register))
+(eval-when (compile-toplevel)
+  (proclaim '(declaration array-register))
+  )
 
 ;;; The size of the output buffer.  Must be a multiple of 4.
 (defparameter *output-buffer-size* 8192)
@@ -670,12 +672,16 @@
 ;; Note that since we don't use the CL i/o facilities to do i/o, the display
 ;; input and output "stream" is really a file descriptor (fixnum).
 ;;
-#+excl
 (defun open-x-stream (host display protocol)
-  (declare (ignore protocol)) ;; assume TCP
-  (let ((stream (socket:make-socket :remote-host (string host)
-				    :remote-port (+ *x-tcp-port* display)
-				    :format :binary)))
+  (declare (ignore protocol)) ;; Derive from host
+  (let ((stream (if (or (string= host "") (string= host "unix"))
+		    (socket:make-socket
+		     :address-family :file
+		     :remote-filename (format nil "/tmp/.X11-unix/X~D" display)
+		     :format :binary)
+		  (socket:make-socket :remote-host (string host)
+				      :remote-port (+ *x-tcp-port* display)
+				      :format :binary))))
     (if (streamp stream)
 	stream
       (error "Cannot connect to server: ~A:~D" host display))))
@@ -790,42 +796,18 @@
 	     :timeout)
 	  
 	    ;; If the scheduler is running let it do timeouts.
-	    ((sys:scheduler-running-p)
+	    (t
 	     (if (not
 		  (mp:wait-for-input-available fd :whostate *read-whostate*
 					       :wait-function #'fd-char-avail-p
 					       :timeout timeout))
-		 (return-from buffer-input-wait-default :timeout))
-	     )
-	    
-	    ;; Otherwise we have to handle timeouts by hand, and call select()
-	    ;; to block until input is available.  Note we don't really handle
-	    ;; the interaction of interrupts and (numberp timeout) here.  XX
-	    (t
-	     #+mswindows
-	     (error "scheduler must be running to use CLX on MS Windows")
-	     #-mswindows
-	     (let ((res 0))
-	       (declare (fixnum res))
-	       (with-interrupt-checking-on
-		(loop
-		  (setq res (fd-wait-for-input fd (if (null timeout) 0
-						    (truncate timeout))))
-		  (cond ((plusp res)	; success
-			 (return nil))
-			((eq res 0)	; timeout
-			 (return :timeout))
-			((eq res -1)	; error
-			 (return t))
-			;; Otherwise we got an interrupt -- go around again.
-			)))))))))
+		 (return-from buffer-input-wait-default :timeout)))))))
 
 	   
 ;;; BUFFER-LISTEN-DEFAULT - returns T if there is input available for the
 ;;; buffer. This should never block, so it can be called from the scheduler.
 
 ;;; The default implementation is to just use listen.
-#+excl 
 #+(and excl clx-use-allegro-streams)
 (defun buffer-listen-default (display)
   (declare (type display display))
