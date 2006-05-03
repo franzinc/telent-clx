@@ -808,7 +808,6 @@
 ;;; buffer. This should never block, so it can be called from the scheduler.
 
 ;;; The default implementation is to just use listen.
-#+(and excl clx-use-allegro-streams)
 (defun buffer-listen-default (display)
   (declare (type display display))
   (let ((stream (display-input-stream display)))
@@ -816,15 +815,6 @@
     (if (null stream)
 	t
       (listen stream))))
-
-#+(and excl (not clx-use-allegro-streams))
-(defun buffer-listen-default (display)
-  (declare (type display display))
-  (let ((fd (display-input-stream display)))
-    (declare (type fixnum fd))
-    (if (= fd -1)
-	t
-      (fd-char-avail-p fd))))
 
 
 ;;;----------------------------------------------------------------------------
