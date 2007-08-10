@@ -2180,3 +2180,16 @@ Returns a list of (host display-number screen protocol)."
 	(24 (copy pixarray-24 pixarray-24-element-type))
 	(32 (copy pixarray-32 pixarray-32-element-type)))
       t)))
+
+(defmacro correct-case (string)
+  ;; This macro converts the given string to the 
+  ;; current preferred case, or leaves it alone in a case-sensitive mode.
+  (let ((str (gensym)))
+    `(let ((,str ,string))
+       (case excl::*current-case-mode*
+	 (:case-insensitive-lower
+	  (string-downcase ,str))
+	 (:case-insensitive-upper
+	  (string-upcase ,str))
+	 ((:case-sensitive-lower :case-sensitive-upper)
+	  ,str)))))
