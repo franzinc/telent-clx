@@ -674,14 +674,23 @@
 ;;
 (defun open-x-stream (host display protocol)
   (declare (ignore protocol)) ;; Derive from host
-  (let ((stream (if (or (string= host "") (string= host "unix"))
-		    (socket:make-socket
-		     :address-family :file
-		     :remote-filename (format nil "/tmp/.X11-unix/X~D" display)
-		     :format :binary)
-		  (socket:make-socket :remote-host (string host)
-				      :remote-port (+ *x-tcp-port* display)
-				      :format :binary))))
+  (let ((stream (cond
+		 ((or (string= host "") (string= host "unix"))
+		  (socket:make-socket
+		   :address-family :file
+		   :remote-filename (format nil "/tmp/.X11-unix/X~D" display)
+		   :format :binary))
+		 ;; should be 10.5.2 or above, but this will let us see
+		 ;; who is using older versions.
+		 #+macosx
+		 ((eq protocol :launchd)
+		  (socket:make-socket
+		   :address-family :file
+		   :remote-filename host
+		   :format :binary))
+		 (t (socket:make-socket :remote-host (string host)
+					:remote-port (+ *x-tcp-port* display)
+					:format :binary)))))
     (if (streamp stream)
 	stream
       (error "Cannot connect to server: ~A:~D" host display))))
@@ -1200,6 +1209,9 @@ C language bindings
  - If a double colon separates hostname from displaynumber, the
    protocol is assumed to be decnet.
 
+ - On macosx (>= 10.5.2) if display-name is /tmp/launch-*
+   then this is the launchd protocol for auto-starting the X server.
+
 Returns a list of (host display-number screen protocol)."
   (let* ((name (or display-name
 		   (getenv "DISPLAY")
@@ -1207,7 +1219,8 @@ Returns a list of (host display-number screen protocol)."
 	 (slash-i (or (position #\/ name) -1))
 	 (colon-i (position #\: name :start (1+ slash-i)))
 	 (decnet-colon-p (eql (elt name (1+ colon-i)) #\:))
-	 (host (subseq name (1+ slash-i) colon-i))
+	 (host (if (search "/tmp/launch" name)
+		   name (subseq name (1+ slash-i) colon-i)))
 	 (dot-i (and colon-i (position #\. name :start colon-i)))
 	 (display (when colon-i
 		    (parse-integer name
@@ -1220,6 +1233,8 @@ Returns a list of (host display-number screen protocol)."
 	 (protocol
 	  (cond ((or (string= host "") (string-equal host "unix")) :local)
 		(decnet-colon-p :decnet)
+		#+macosx
+		((= slash-i 0) :launchd)
 		((> slash-i -1) (intern
 				 (string-upcase (subseq name 0 slash-i))
 				 :keyword))
