@@ -12,7 +12,7 @@
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-(in-package "XLIB")
+(in-package :xlib)
 
 ;;; No new events or errors are defined by this extension.  (Big
 ;;; Requests Extension, section 3)

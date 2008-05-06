@@ -556,8 +556,8 @@
 	   (invert-rectangle x old-y disk-thickness width)
 	   (update-screen)))
       ;; Loop body writes disk at new height & erases at old height.
-      (invert-rectangle X old-y disk-thickness width)
-      (invert-rectangle X new-y disk-thickness width)
+      (invert-rectangle x old-y disk-thickness width)
+      (invert-rectangle x new-y disk-thickness width)
       (update-screen))))
 
 
