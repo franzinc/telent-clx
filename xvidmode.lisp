@@ -192,7 +192,7 @@ return two values major-version and minor-version in that order."
 	 (minor (card16-get 10)))
      (declare (type card16 major minor))
      (when (>= major 2)
-       (XFree86-VidMode-set-client-version display))
+       (xfree86-vidmode-set-client-version display))
      (values major minor))))
 
 (defun xfree86-vidmode-set-client-version (display)

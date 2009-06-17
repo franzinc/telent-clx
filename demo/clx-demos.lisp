@@ -89,7 +89,7 @@
 ;;;
 
 (defvar *name-to-function* (make-hash-table :test #'eq))
-(defvar *keyword-package* (find-package "KEYWORD"))
+(defvar *keyword-package* (find-package :keyword))
 
 (defun demo ()
   (macrolet ((read-demo ()

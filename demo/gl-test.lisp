@@ -1,6 +1,6 @@
 (defpackage :gl-test
   (:use :common-lisp :xlib)
-  (:export "TEST" "CLX-TEST"))
+  (:export #:test #:clx-test))
 
 (in-package :gl-test)
 

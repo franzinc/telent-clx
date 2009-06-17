@@ -134,11 +134,7 @@
           render-composite-glyphs
           render-add-glyph
           render-add-glyph-from-picture
-          render-free-glyphs
-          
-          
-	  render-combine
-	  ))
+          render-free-glyphs)))
 
 (pushnew :clx-ext-render *features*)
 

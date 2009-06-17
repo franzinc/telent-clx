@@ -12,28 +12,34 @@
 ;;; This is an implementation of the XINERAMA extension. It does not
 ;;; include the obsolete PanoramiX calls.
 
-(defpackage "XLIB.XINERAMA"
-  (:use "COMMON-LISP" "XLIB")
-  (:nicknames "XINERAMA")
-  (:import-from "XLIB"
-		"WITH-BUFFER-REQUEST"
-		"WITH-BUFFER-REQUEST-AND-REPLY"
-		"DATA"
-		"BOOLEAN" "BOOLEAN-GET"
-		"CARD8" "CARD8-GET"
-		"CARD16" "CARD16-GET"
-		"CARD32" "CARD32-GET"
-		"INT16" "INT16-GET")
-  (:export "SCREEN-INFO"
-           "SCREEN-INFO-NUMBER"
-           "SCREEN-INFO-X"
-           "SCREEN-INFO-Y"
-           "SCREEN-INFO-WIDTH"
-           "SCREEN-INFO-HEIGHT"
-           "XINERAMA-QUERY-VERSION"
-           "XINERAMA-IS-ACTIVE"
-           "XINERAMA-QUERY-SCREENS"))
-(in-package "XINERAMA")
+(defpackage :xlib.xinerama
+  (:use :common-lisp :xlib)
+  (:nicknames :xinerama)
+  (:import-from :xlib
+		#:with-buffer-request
+		#:with-buffer-request-and-reply
+		#:data
+		#:boolean
+		#:boolean-get
+		#:card8
+		#:card8-get
+		#:card16
+		#:card16-get
+		#:card32
+		#:card32-get
+		#:int16
+		#:int16-get)
+  (:export #:screen-info
+           #:screen-info-number
+           #:screen-info-x
+           #:screen-info-y
+           #:screen-info-width
+           #:screen-info-height
+           #:xinerama-query-version
+           #:xinerama-is-active
+           #:xinerama-query-screens))
+
+(in-package :xinerama)
 
 (define-extension "XINERAMA")
 
